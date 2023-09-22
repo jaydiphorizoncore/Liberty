@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_ll"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewPager"
+                app:tabBackground="@drawable/tab_background_shape"
+                app:tabIndicatorHeight="0dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tab_ll">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_package"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
+                    android:text="@string/str_package"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_packages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_package"
+                    tools:listitem="@layout/item_packages" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_courses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
+                    android:text="@string/str_courses"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_packages" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_allCourse"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_style"
+                    android:drawableStart="@drawable/ic_all_courses"
+                    android:padding="15dp"
+                    android:textSize="15sp"
+                    android:text="@string/str_allCourse"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/btn_text_color_style"
+                    app:layout_constraintEnd_toStartOf="@id/btn_popular"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_courses" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_popular"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_style"
+                    android:drawableStart="@drawable/ic_popular"
+                    android:drawablePadding="5dp"
+                    android:padding="15dp"
+                    android:text="@string/str_popular"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:textColor="@drawable/btn_text_color_style"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_allCourse"
+                    app:layout_constraintTop_toBottomOf="@id/tv_courses" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_newest"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_style"
+                    android:drawableStart="@drawable/ic_newest"
+                    android:drawablePadding="5dp"
+                    android:textSize="15sp"
+                    android:padding="15dp"
+                    android:text="@string/str_newest"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/btn_text_color_style"
+                    app:layout_constraintEnd_toStartOf="@id/btn_popular"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_allCourse" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_advance"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_style"
+                    android:drawableStart="@drawable/ic_advance"
+                    android:drawablePadding="5dp"
+                    android:padding="15dp"
+                    android:text="@string/str_allCourse"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/btn_text_color_style"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_newest"
+                    app:layout_constraintTop_toBottomOf="@id/btn_popular" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_courses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/btn_newest"
+                    tools:listitem="@layout/item_courses" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
+                    android:text="@string/str_category"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_courses" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_category"
+                    tools:listitem="@layout/item_category" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_testimonial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
+                    android:text="@string/str_testimonial"
+                    android:textSize="25sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_category" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_testimonial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_testimonial"
+                    tools:listitem="@layout/item_testimonial" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_toppers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
+                    android:text="@string/str_topper"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_testimonial" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_topper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_toppers"
+                    tools:listitem="@layout/item_toppers" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_DailyQuiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
+                    android:text="@string/str_DailyQuizeName"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_topper" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_DailyQuiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_DailyQuiz"
+                    tools:listitem="@layout/item_daily_quiz" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
