@@ -2,14 +2,22 @@ package com.example.liberty.ui.home
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.liberty.R
+import com.example.liberty.network.ApiInterface
+import com.example.liberty.network.ApiRepository
+import com.example.liberty.network.DashboardInterface
+import com.example.liberty.network.response.DashboardResponse
+import com.example.liberty.network.viewmodel.ApiViewModel
+import com.example.liberty.network.viewmodel.ViewModelFactory
 import com.example.liberty.ui.home.adapter.CategoryAdapter
 import com.example.liberty.ui.home.adapter.CoursesAdapter
 import com.example.liberty.ui.home.adapter.DailyQuizAdapter
@@ -28,7 +36,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), DashboardInterface {
     private lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
 
@@ -44,6 +52,8 @@ class HomeFragment : Fragment() {
     private lateinit var toppersRecyclerView: RecyclerView
     private lateinit var dailyQuizRecyclerView: RecyclerView
 
+    private lateinit var viewModel: ApiViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -58,6 +68,13 @@ class HomeFragment : Fragment() {
         prepareTestimonialRecyclerView()
         prepareToppersRecyclerView()
         prepareDailyQuizRecyclerView()
+
+        val api = ApiInterface()
+        val repository = ApiRepository(api)
+        val factory = ViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[ApiViewModel::class.java]
+        viewModel.dashboardInterface = this
+        viewModel.getDashboard()
         return view
     }
 
@@ -322,6 +339,20 @@ class HomeFragment : Fragment() {
         testimonialRecyclerView = view.findViewById(R.id.recycler_testimonial)
         toppersRecyclerView = view.findViewById(R.id.recycler_topper)
         dailyQuizRecyclerView = view.findViewById(R.id.recycler_DailyQuiz)
+    }
+
+    override fun onStarted() {
+        Log.d("TAG", "onStarted")
+    }
+
+    override fun onSuccess(dashboardResponse: DashboardResponse?) {
+        if (dashboardResponse != null) {
+            Log.d("TAG", "onSuccess")
+        }
+    }
+
+    override fun onFailure(message: String) {
+        Log.d("TAG", "onFailure")
     }
 
 }

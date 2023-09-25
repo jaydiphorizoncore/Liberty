@@ -14,10 +14,10 @@ import kotlinx.coroutines.launch
 class ApiViewModel(private val apiRepository: ApiRepository) : ViewModel() {
 
     lateinit var dashboardInterface: DashboardInterface
-    fun detDashboard() {
+    fun getDashboard() {
         dashboardInterface.onStarted()
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val token = AppConstants.TOKEN
             val headers = HashMap<String, String>()
             headers[AppConstants.KEY] = token
@@ -28,6 +28,8 @@ class ApiViewModel(private val apiRepository: ApiRepository) : ViewModel() {
                 val response = apiRepository.dashboard(headers, dashboardRequest)
                 if (response != null) {
                     dashboardInterface.onSuccess(response)
+                }else{
+                    dashboardInterface.onFailure("Fail")
                 }
 
             } catch (e: ApiException) {
