@@ -38,11 +38,11 @@ class HomeFragment : Fragment() {
     private lateinit var btnAdvance: Button
 
     private lateinit var packageRecyclerView: RecyclerView
-    lateinit var coursesRecyclerView: RecyclerView
-    lateinit var categoryRecyclerView: RecyclerView
-    lateinit var testimonialRecyclerView: RecyclerView
-    lateinit var toppersRecyclerView: RecyclerView
-    lateinit var dailyQuizRecyclerView: RecyclerView
+    private lateinit var coursesRecyclerView: RecyclerView
+    private lateinit var categoryRecyclerView: RecyclerView
+    private lateinit var testimonialRecyclerView: RecyclerView
+    private lateinit var toppersRecyclerView: RecyclerView
+    private lateinit var dailyQuizRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
