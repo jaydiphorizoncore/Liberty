@@ -1,14 +1,16 @@
 package com.example.liberty.ui.home.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.liberty.R
-import com.example.liberty.ui.home.dataclass.DailyQuizData
+import com.example.liberty.network.response.DataX
+import com.example.liberty.network.response.Test
 
-class DailyQuizAdapter(var listData: ArrayList<DailyQuizData>) :
+class DailyQuizAdapter(private var context: Context,private var listData: ArrayList<Test>) :
     RecyclerView.Adapter<DailyQuizAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -27,8 +29,15 @@ class DailyQuizAdapter(var listData: ArrayList<DailyQuizData>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tv_dailyQuizName.text = listData[position].tv_dailyQuizName
-        holder.tv_questions.text =listData[position].tv_questions.toString() + " Questions"
-        holder.tv_time.text = listData[position].tv_time.toString() + " Minutes"
+        val listData = listData[position]
+
+        holder.tv_dailyQuizName.text = listData.testTitle
+        holder.tv_questions.text =listData.questions
+        holder.tv_time.text = listData.duration
+    }
+
+    fun setData(itemList:List<Test>){
+        this.listData = itemList as ArrayList<Test>
+        notifyDataSetChanged()
     }
 }

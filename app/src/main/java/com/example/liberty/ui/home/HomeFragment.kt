@@ -1,6 +1,5 @@
 package com.example.liberty.ui.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,8 +25,6 @@ import com.example.liberty.ui.home.adapter.PackageAdapter
 import com.example.liberty.ui.home.adapter.TestimonialAdapter
 import com.example.liberty.ui.home.adapter.ToppersAdapter
 import com.example.liberty.ui.home.adapter.ViewPagerAdapter
-import com.example.liberty.ui.home.dataclass.CoursesData
-import com.example.liberty.ui.home.dataclass.DailyQuizData
 import com.example.liberty.ui.home.dataclass.PackageData
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -53,6 +50,8 @@ class HomeFragment : Fragment(), DashboardInterface {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var testimonialAdapter: TestimonialAdapter
     private lateinit var toppersAdapter: ToppersAdapter
+    private lateinit var quizAdapter: DailyQuizAdapter
+    private lateinit var coursesAdapter: CoursesAdapter
 
     private lateinit var viewModel: ApiViewModel
 
@@ -82,36 +81,6 @@ class HomeFragment : Fragment(), DashboardInterface {
 
     private fun clickListener() {
 
-        btnAllCourses.isSelected = true
-
-        btnAllCourses.setOnClickListener {
-            btnAllCourses.setBackgroundResource(R.drawable.button_style)
-            btnAllCourses.isSelected = true
-            btnPopular.isSelected = false
-            btnAdvance.isSelected = false
-            btnNewest.isSelected = false
-        }
-        btnPopular.setOnClickListener {
-            btnPopular.setBackgroundResource(R.drawable.button_style)
-            btnAllCourses.isSelected = false
-            btnPopular.isSelected = true
-            btnAdvance.isSelected = false
-            btnNewest.isSelected = false
-        }
-        btnNewest.setOnClickListener {
-            btnPopular.setBackgroundResource(R.drawable.button_style)
-            btnAllCourses.isSelected = false
-            btnPopular.isSelected = false
-            btnAdvance.isSelected = false
-            btnNewest.isSelected = true
-        }
-        btnAdvance.setOnClickListener {
-            btnPopular.setBackgroundResource(R.drawable.button_style)
-            btnAllCourses.isSelected = false
-            btnPopular.isSelected = false
-            btnAdvance.isSelected = true
-            btnNewest.isSelected = false
-        }
 
     }
 
@@ -179,59 +148,8 @@ class HomeFragment : Fragment(), DashboardInterface {
     }
 
     private fun prepareCoursesRecyclerView() {
-        val itemList = ArrayList<CoursesData>()
-
-        itemList.add(
-            CoursesData(
-                "Popular",
-                R.drawable.ic_course_dp,
-                "₹ 3000/-",
-                "GCERT (General science)- Akhram Sherasiya",
-                "120 Videos",
-                "250 Materials",
-                "300 Tests",
-                Color.parseColor("#14AE5C")
-            )
-        )
-        itemList.add(
-            CoursesData(
-                "Popular",
-                R.drawable.ic_course_dp,
-                "₹ 2000/-",
-                "GCERT (General science)- Akhram Sherasiya",
-                "120 Videos",
-                "250 Materials",
-                "300 Tests",
-                Color.parseColor("#FD6584")
-            )
-        )
-        itemList.add(
-            CoursesData(
-                "Popular",
-                R.drawable.ic_course_dp,
-                "₹ 5000/-",
-                "GCERT (General science)- Akhram Sherasiya",
-                "120 Videos",
-                "250 Materials",
-                "300 Tests",
-                Color.parseColor("#14AE5C")
-            )
-        )
-        itemList.add(
-            CoursesData(
-                "Popular",
-                R.drawable.ic_course_dp,
-                "₹ 2000/-",
-                "GCERT (General science)- Akhram Sherasiya",
-                "120 Videos",
-                "250 Materials",
-                "300 Tests",
-                Color.parseColor("#FD6584")
-            )
-        )
-
-        val coursesRecyclerAdapter = CoursesAdapter(itemList)
-        coursesRecyclerView.adapter = coursesRecyclerAdapter
+        coursesAdapter = CoursesAdapter(requireContext(), ArrayList())
+        coursesRecyclerView.adapter = coursesAdapter
     }
 
     private fun prepareCategoryRecyclerView() {
@@ -262,13 +180,8 @@ class HomeFragment : Fragment(), DashboardInterface {
     }
 
     private fun prepareDailyQuizRecyclerView() {
-        val itemList = ArrayList<DailyQuizData>()
-        itemList.add(DailyQuizData("Test- 1315 GSCB Mix Test", 50, 30))
-        itemList.add(DailyQuizData("Test- 1315 GSCB Mix Test", 50, 30))
-        itemList.add(DailyQuizData("Test- 1315 GSCB Mix Test", 50, 30))
-
-        val dailyQuizAdapter = DailyQuizAdapter(itemList)
-        dailyQuizRecyclerView.adapter = dailyQuizAdapter
+        quizAdapter = DailyQuizAdapter(requireContext(), ArrayList())
+        dailyQuizRecyclerView.adapter = quizAdapter
     }
 
 
@@ -321,11 +234,54 @@ class HomeFragment : Fragment(), DashboardInterface {
     }
 
     override fun onSuccess(dashboardResponse: DashboardResponse?) {
+        btnAllCourses.isSelected = true
         if (dashboardResponse != null) {
             Log.d("TAG", "onSuccess")
             categoryAdapter.setData(dashboardResponse.data.categories)
             testimonialAdapter.setData(dashboardResponse.data.testimonials.testimonialsData)
             toppersAdapter.setData(dashboardResponse.data.toppers.topersData)
+            quizAdapter.setData(dashboardResponse.data.tests)
+
+            btnAllCourses.setOnClickListener {
+                btnAllCourses.setBackgroundResource(R.drawable.button_style)
+                btnAllCourses.isSelected = true
+                btnPopular.isSelected = false
+                btnAdvance.isSelected = false
+                btnNewest.isSelected = false
+                coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
+            }
+            btnPopular.setOnClickListener {
+                btnPopular.setBackgroundResource(R.drawable.button_style)
+                btnAllCourses.isSelected = false
+                btnPopular.isSelected = true
+                btnAdvance.isSelected = false
+                btnNewest.isSelected = false
+                coursesAdapter.setAllData(dashboardResponse.data.courses.popularCourses.courses)
+
+            }
+            btnAdvance.setOnClickListener {
+                btnPopular.setBackgroundResource(R.drawable.button_style)
+                btnAllCourses.isSelected = false
+                btnPopular.isSelected = false
+                btnAdvance.isSelected = true
+                btnNewest.isSelected = false
+                coursesAdapter.setAllData(dashboardResponse.data.courses.advanceCourses.courses)
+            }
+            btnNewest.setOnClickListener {
+                btnPopular.setBackgroundResource(R.drawable.button_style)
+                btnAllCourses.isSelected = false
+                btnPopular.isSelected = false
+                btnAdvance.isSelected = false
+                btnNewest.isSelected = true
+
+                if (dashboardResponse.data.courses.advanceCourses == null) {
+                    coursesRecyclerView.visibility = View.INVISIBLE
+
+                } else {
+                    coursesAdapter.setAllData(dashboardResponse.data.courses.advanceCourses.courses)
+                }
+            }
+
         }
     }
 

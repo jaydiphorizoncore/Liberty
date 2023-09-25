@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="230dp">
 
 
     <androidx.cardview.widget.CardView
@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#95D0E3"
         app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_dp_courses"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -60,7 +61,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_GCERT_courses"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/str_gcert"
