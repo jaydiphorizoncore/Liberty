@@ -13,22 +13,16 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 
 interface ApiInterface {
-    /*   @GET("check-username")
-         fun checkUserNAme(): Call<LoginResponse>
-
-         @POST("check-username")
-         fun sendRequest(@Body dataRequest:LoginRequest):retrofit2.Callback<LoginRequest>*/
 
     @POST("check-username") // Adjust the endpoint as needed
     fun checkUserNAme(@Body request: LoginRequest): Call<LoginResponse>
 
     @POST("member/get-dashboard-data")
-    fun dashboard(
+    suspend fun getDashboard(
         @HeaderMap headerMap: Map<String, String>,
         @Body dashboardRequest: DashboardRequest
     ): Response<DashboardResponse>
@@ -46,7 +40,7 @@ interface ApiInterface {
                     ).build()
                     chain.proceed(newRequest)
                 }).build()
-            return Retrofit.Builder().baseUrl("http://live.libertygroup.in/api/v2/")
+            return Retrofit.Builder().baseUrl(AppConstants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

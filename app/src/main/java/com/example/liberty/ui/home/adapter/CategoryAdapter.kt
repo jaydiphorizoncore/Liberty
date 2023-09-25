@@ -1,16 +1,19 @@
 package com.example.liberty.ui.home.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.liberty.R
-import com.example.liberty.ui.home.dataclass.CategoryData
+import com.example.liberty.network.response.Category
 
-class CategoryAdapter(private val listData: ArrayList<CategoryData>) :
+class CategoryAdapter(private val context: Context, private var listData: ArrayList<Category>) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var imgCategory: ImageView = itemView.findViewById(R.id.img_category_item)
@@ -29,7 +32,16 @@ class CategoryAdapter(private val listData: ArrayList<CategoryData>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.imgCategory.setImageResource(listData[position].img_category)
-        holder.tvCategory.text = listData[position].tv_category
+        val listData = listData[position]
+
+
+        Glide.with(context).load(listData.iconUrl).into(holder.imgCategory)
+        holder.tvCategory.text = listData.title
     }
+
+    fun setData(itemList: List<Category>) {
+        this.listData = itemList as ArrayList<Category>
+        notifyDataSetChanged()
+    }
+
 }

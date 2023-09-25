@@ -5,10 +5,10 @@ import com.example.liberty.network.response.DashboardResponse
 
 class ApiRepository(private val apiInterface: ApiInterface) : SafeApiRequest() {
 
-    suspend fun dashboard(
+    suspend fun getDashboard(
         headerMap: Map<String, String>,
         dashboardRequest: DashboardRequest
     ): DashboardResponse? {
-        return apiRequest { apiInterface.dashboard(headerMap, dashboardRequest) }
+        return apiRequest { apiInterface.getDashboard(headerMap, dashboardRequest) }
     }
 }

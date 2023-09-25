@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.liberty.R
@@ -25,12 +26,9 @@ import com.example.liberty.ui.home.adapter.PackageAdapter
 import com.example.liberty.ui.home.adapter.TestimonialAdapter
 import com.example.liberty.ui.home.adapter.ToppersAdapter
 import com.example.liberty.ui.home.adapter.ViewPagerAdapter
-import com.example.liberty.ui.home.dataclass.CategoryData
 import com.example.liberty.ui.home.dataclass.CoursesData
 import com.example.liberty.ui.home.dataclass.DailyQuizData
 import com.example.liberty.ui.home.dataclass.PackageData
-import com.example.liberty.ui.home.dataclass.TestimonialData
-import com.example.liberty.ui.home.dataclass.ToppersData
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
@@ -51,6 +49,10 @@ class HomeFragment : Fragment(), DashboardInterface {
     private lateinit var testimonialRecyclerView: RecyclerView
     private lateinit var toppersRecyclerView: RecyclerView
     private lateinit var dailyQuizRecyclerView: RecyclerView
+
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var testimonialAdapter: TestimonialAdapter
+    private lateinit var toppersAdapter: ToppersAdapter
 
     private lateinit var viewModel: ApiViewModel
 
@@ -234,56 +236,29 @@ class HomeFragment : Fragment(), DashboardInterface {
 
     private fun prepareCategoryRecyclerView() {
 
-        val itemList = ArrayList<CategoryData>()
-        itemList.add(CategoryData(R.drawable.ic_paper_solution, "GSCB Paper Solution"))
-        itemList.add(CategoryData(R.drawable.ic_mathes, "Maths"))
-        itemList.add(CategoryData(R.drawable.ic_english_grammer, "English Grammar"))
-        itemList.add(CategoryData(R.drawable.ic_gujarat_culture, "Gujarati Culture"))
+        categoryAdapter = CategoryAdapter(requireContext(), ArrayList())
+        categoryRecyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = categoryAdapter
+        }
 
-        val categoryAdapter = CategoryAdapter(itemList)
-        categoryRecyclerView.adapter = categoryAdapter
     }
 
     private fun prepareTestimonialRecyclerView() {
-        val itemList = ArrayList<TestimonialData>()
+        testimonialAdapter = TestimonialAdapter(requireContext(), ArrayList())
 
-        itemList.add(
-            TestimonialData(
-                R.drawable.ic_testimonial,
-                "Ravindar Mehta",
-                "Ravindar Mehta Ravindar Mehta Ravindar Mehta Ravindar Mehta..."
-            )
-        )
-        itemList.add(
-            TestimonialData(
-                R.drawable.ic_testimonial,
-                "Ravindar Mehta",
-                "Ravindar Mehta Ravindar Mehta Ravindar Mehta Ravindar Mehta..."
-            )
-        )
-        itemList.add(
-            TestimonialData(
-                R.drawable.ic_testimonial,
-                "Ravindar Mehta",
-                "Ravindar Mehta Ravindar Mehta Ravindar Mehta Ravindar Mehta..."
-            )
-        )
-
-        val testimonialAdapter = TestimonialAdapter(itemList)
-        testimonialRecyclerView.adapter = testimonialAdapter
-
+        testimonialRecyclerView.apply {
+            setHasFixedSize(true)
+            adapter = testimonialAdapter
+        }
     }
 
     private fun prepareToppersRecyclerView() {
-        val itemList = ArrayList<ToppersData>()
-        itemList.add(ToppersData(R.drawable.ic_toppers, "Divyang Patel", "GPSC Class 12"))
-        itemList.add(ToppersData(R.drawable.ic_toppers2, "Mamtaben Popat", "GPSC Class 12"))
-        itemList.add(ToppersData(R.drawable.ic_toppers, "Divyang Patel", "GPSC Class 12"))
-        itemList.add(ToppersData(R.drawable.ic_toppers2, "Mamtaben Popat", "GPSC Class 12"))
 
+        toppersAdapter = ToppersAdapter(requireContext(), ArrayList())
+        toppersRecyclerView.adapter = toppersAdapter
 
-        val topperAdapter = ToppersAdapter(itemList)
-        toppersRecyclerView.adapter = topperAdapter
     }
 
     private fun prepareDailyQuizRecyclerView() {
@@ -348,6 +323,9 @@ class HomeFragment : Fragment(), DashboardInterface {
     override fun onSuccess(dashboardResponse: DashboardResponse?) {
         if (dashboardResponse != null) {
             Log.d("TAG", "onSuccess")
+            categoryAdapter.setData(dashboardResponse.data.categories)
+            testimonialAdapter.setData(dashboardResponse.data.testimonials.testimonialsData)
+            toppersAdapter.setData(dashboardResponse.data.toppers.topersData)
         }
     }
 

@@ -25,16 +25,16 @@ class ApiViewModel(private val apiRepository: ApiRepository) : ViewModel() {
             val dashboardRequest = DashboardRequest("1.3.8", 1, "1.0", "en", "1563")
             try {
 
-                val response = apiRepository.dashboard(headers, dashboardRequest)
+                val response = apiRepository.getDashboard(headers, dashboardRequest)
+                Log.d("TAG", "getDashboard: $response")
                 if (response != null) {
                     dashboardInterface.onSuccess(response)
-                }else{
-                    dashboardInterface.onFailure("Fail")
                 }
 
             } catch (e: ApiException) {
                 dashboardInterface.onFailure(e.message!!)
             } catch (e: Exception) {
+                Log.e(this::class.simpleName, e.message.toString())
                 Log.e("Exception", "Exception: $e")
             }
 

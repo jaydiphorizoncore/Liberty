@@ -1,15 +1,17 @@
 package com.example.liberty.ui.home.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.liberty.R
-import com.example.liberty.ui.home.dataclass.ToppersData
+import com.example.liberty.network.response.TopersData
 
-class ToppersAdapter(var listData: ArrayList<ToppersData>) :
+class ToppersAdapter(private val context: Context,private var listData: ArrayList<TopersData>) :
     RecyclerView.Adapter<ToppersAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imgToppers: ImageView = itemView.findViewById(R.id.img_topper)
@@ -29,8 +31,16 @@ class ToppersAdapter(var listData: ArrayList<ToppersData>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.imgToppers.setImageResource(listData[position].imgToppers)
-        holder.tvTopperName.text = listData[position].tvToppersName
-        holder.tvTopperClass.text = listData[position].tvToppersClass
+        val itemList = listData[position]
+
+       Glide.with(context).load(itemList.image).into(holder.imgToppers)
+        holder.tvTopperName.text = itemList.name
+        holder.tvTopperClass.text =itemList.courseName
     }
+
+    fun setData(itemList: List<TopersData>){
+        this.listData = itemList as ArrayList<TopersData>
+        notifyDataSetChanged()
+    }
+
 }
