@@ -1,5 +1,6 @@
 package com.example.liberty.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ import com.example.liberty.ui.home.adapter.TestimonialAdapter
 import com.example.liberty.ui.home.adapter.ToppersAdapter
 import com.example.liberty.ui.home.adapter.ViewPagerAdapter
 import com.example.liberty.ui.home.dataclass.PackageData
+import com.example.liberty.ui.home.viewpagerFragment.ImageFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
@@ -91,7 +93,30 @@ class HomeFragment : Fragment(), DashboardInterface {
     }
 
     private fun clickListener() {
-
+        tvPackage.setOnClickListener {
+            val i = Intent(context, PackageActivity::class.java)
+            startActivity(i)
+        }
+        tvCourses.setOnClickListener {
+            val i = Intent(context, CoursesActivity::class.java)
+            startActivity(i)
+        }
+        tvCategory.setOnClickListener {
+            val i = Intent(context, CategoryActivity::class.java)
+            startActivity(i)
+        }
+        tvTestimonial.setOnClickListener {
+            val i = Intent(context, TestimonialActivity::class.java)
+            startActivity(i)
+        }
+        tvToppers.setOnClickListener {
+            val i = Intent(context, ToppersActivity::class.java)
+            startActivity(i)
+        }
+        tvDailyQuiz.setOnClickListener {
+            val i = Intent(context, DailyQuizActivity::class.java)
+            startActivity(i)
+        }
 
 
     }
@@ -206,8 +231,8 @@ class HomeFragment : Fragment(), DashboardInterface {
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
 
-        val adapter = ViewPagerAdapter(parentFragmentManager, tabLayout.tabCount)
-        viewPager.adapter = adapter
+      //  val adapter = ViewPagerAdapter(parentFragmentManager, tabLayout.tabCount)
+       // viewPager.adapter = adapter
 
         viewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(tabLayout))
 
@@ -261,6 +286,18 @@ class HomeFragment : Fragment(), DashboardInterface {
         btnAllCourses.isSelected = true
         if (dashboardResponse != null) {
             Log.d("TAG", "onSuccess")
+
+
+            val imageUrls = dashboardResponse.data.bannerData.map { it.bannerUrl }
+            val adapter = ViewPagerAdapter(parentFragmentManager)
+            for (imageUrl in imageUrls) {
+                val imageFragment = ImageFragment(imageUrl)
+                adapter.addFragment(imageFragment)
+
+            }
+            adapter.notifyDataSetChanged()
+            viewPager.adapter = adapter
+
             categoryAdapter.setData(dashboardResponse.data.categories)
             testimonialAdapter.setData(dashboardResponse.data.testimonials.testimonialsData)
             toppersAdapter.setData(dashboardResponse.data.toppers.topersData)
