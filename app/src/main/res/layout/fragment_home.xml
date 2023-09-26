@@ -14,6 +14,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ProgressBar
+                android:id="@+id/home_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="250dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
@@ -25,8 +34,8 @@
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@null"
                 android:background="@null"
+                android:backgroundTint="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewPager"
@@ -81,10 +90,10 @@
                     android:background="@drawable/button_style"
                     android:drawableStart="@drawable/ic_all_courses"
                     android:padding="15dp"
-                    android:textSize="15sp"
                     android:text="@string/str_allCourse"
                     android:textAllCaps="false"
                     android:textColor="@drawable/btn_text_color_style"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toStartOf="@id/btn_popular"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_courses" />
@@ -100,8 +109,8 @@
                     android:padding="15dp"
                     android:text="@string/str_popular"
                     android:textAllCaps="false"
-                    android:textSize="15sp"
                     android:textColor="@drawable/btn_text_color_style"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_allCourse"
                     app:layout_constraintTop_toBottomOf="@id/tv_courses" />
@@ -114,11 +123,11 @@
                     android:background="@drawable/button_style"
                     android:drawableStart="@drawable/ic_newest"
                     android:drawablePadding="5dp"
-                    android:textSize="15sp"
                     android:padding="15dp"
                     android:text="@string/str_newest"
                     android:textAllCaps="false"
                     android:textColor="@drawable/btn_text_color_style"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toStartOf="@id/btn_popular"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_allCourse" />
@@ -133,9 +142,9 @@
                     android:drawablePadding="5dp"
                     android:padding="15dp"
                     android:text="@string/str_advance"
-                    android:textSize="15sp"
                     android:textAllCaps="false"
                     android:textColor="@drawable/btn_text_color_style"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_newest"
                     app:layout_constraintTop_toBottomOf="@id/btn_popular" />
@@ -150,6 +159,18 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/btn_newest"
                     tools:listitem="@layout/item_courses" />
+
+                <TextView
+                    android:id="@+id/tv_dataNotFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Data Not Found"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/recycler_courses"
+                    app:layout_constraintTop_toTopOf="@id/recycler_courses" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_category"

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,11 +36,20 @@ import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 class HomeFragment : Fragment(), DashboardInterface {
     private lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvDataNotFound: TextView
 
     private lateinit var btnAllCourses: Button
     private lateinit var btnPopular: Button
     private lateinit var btnNewest: Button
     private lateinit var btnAdvance: Button
+
+    private lateinit var tvPackage: TextView
+    private lateinit var tvCourses: TextView
+    private lateinit var tvCategory: TextView
+    private lateinit var tvTestimonial: TextView
+    private lateinit var tvToppers: TextView
+    private lateinit var tvDailyQuiz: TextView
 
     private lateinit var packageRecyclerView: RecyclerView
     private lateinit var coursesRecyclerView: RecyclerView
@@ -80,6 +91,7 @@ class HomeFragment : Fragment(), DashboardInterface {
     }
 
     private fun clickListener() {
+
 
 
     }
@@ -215,11 +227,20 @@ class HomeFragment : Fragment(), DashboardInterface {
     private fun initView(view: View) {
         tabLayout = view.findViewById(R.id.tab_ll)
         viewPager = view.findViewById(R.id.viewPager)
+        progressBar = view.findViewById(R.id.home_progress)
+        tvDataNotFound = view.findViewById(R.id.tv_dataNotFound)
 
         btnAllCourses = view.findViewById(R.id.btn_allCourse)
         btnPopular = view.findViewById(R.id.btn_popular)
         btnNewest = view.findViewById(R.id.btn_newest)
         btnAdvance = view.findViewById(R.id.btn_advance)
+
+        tvPackage = view.findViewById(R.id.tv_package)
+        tvCourses = view.findViewById(R.id.tv_courses)
+        tvCategory = view.findViewById(R.id.tv_category)
+        tvTestimonial = view.findViewById(R.id.tv_testimonial)
+        tvToppers = view.findViewById(R.id.tv_toppers)
+        tvDailyQuiz = view.findViewById(R.id.tv_DailyQuiz)
 
         packageRecyclerView = view.findViewById(R.id.recycler_packages)
         coursesRecyclerView = view.findViewById(R.id.recycler_courses)
@@ -227,6 +248,8 @@ class HomeFragment : Fragment(), DashboardInterface {
         testimonialRecyclerView = view.findViewById(R.id.recycler_testimonial)
         toppersRecyclerView = view.findViewById(R.id.recycler_topper)
         dailyQuizRecyclerView = view.findViewById(R.id.recycler_DailyQuiz)
+
+
     }
 
     override fun onStarted() {
@@ -234,6 +257,7 @@ class HomeFragment : Fragment(), DashboardInterface {
     }
 
     override fun onSuccess(dashboardResponse: DashboardResponse?) {
+        progressBar.visibility = View.INVISIBLE
         btnAllCourses.isSelected = true
         if (dashboardResponse != null) {
             Log.d("TAG", "onSuccess")
@@ -242,6 +266,7 @@ class HomeFragment : Fragment(), DashboardInterface {
             toppersAdapter.setData(dashboardResponse.data.toppers.topersData)
             quizAdapter.setData(dashboardResponse.data.tests)
 
+            coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
             btnAllCourses.setOnClickListener {
                 btnAllCourses.setBackgroundResource(R.drawable.button_style)
                 btnAllCourses.isSelected = true
@@ -249,6 +274,8 @@ class HomeFragment : Fragment(), DashboardInterface {
                 btnAdvance.isSelected = false
                 btnNewest.isSelected = false
                 coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
+                coursesRecyclerView.visibility = View.VISIBLE
+                tvDataNotFound.visibility = View.INVISIBLE
             }
             btnPopular.setOnClickListener {
                 btnPopular.setBackgroundResource(R.drawable.button_style)
@@ -257,7 +284,8 @@ class HomeFragment : Fragment(), DashboardInterface {
                 btnAdvance.isSelected = false
                 btnNewest.isSelected = false
                 coursesAdapter.setAllData(dashboardResponse.data.courses.popularCourses.courses)
-
+                coursesRecyclerView.visibility = View.VISIBLE
+                tvDataNotFound.visibility = View.INVISIBLE
             }
             btnAdvance.setOnClickListener {
                 btnPopular.setBackgroundResource(R.drawable.button_style)
@@ -266,6 +294,8 @@ class HomeFragment : Fragment(), DashboardInterface {
                 btnAdvance.isSelected = true
                 btnNewest.isSelected = false
                 coursesAdapter.setAllData(dashboardResponse.data.courses.advanceCourses.courses)
+                coursesRecyclerView.visibility = View.VISIBLE
+                tvDataNotFound.visibility = View.INVISIBLE
             }
             btnNewest.setOnClickListener {
                 btnPopular.setBackgroundResource(R.drawable.button_style)
@@ -273,13 +303,9 @@ class HomeFragment : Fragment(), DashboardInterface {
                 btnPopular.isSelected = false
                 btnAdvance.isSelected = false
                 btnNewest.isSelected = true
+                coursesRecyclerView.visibility = View.INVISIBLE
+                tvDataNotFound.visibility = View.VISIBLE
 
-                if (dashboardResponse.data.courses.advanceCourses == null) {
-                    coursesRecyclerView.visibility = View.INVISIBLE
-
-                } else {
-                    coursesAdapter.setAllData(dashboardResponse.data.courses.advanceCourses.courses)
-                }
             }
 
         }

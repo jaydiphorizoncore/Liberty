@@ -41,7 +41,7 @@ class CoursesAdapter(private var context: Context, private var listData: ArrayLi
         val listDAta = listData[position]
 
         holder.tv_popular_courses.text = listDAta.isCourseLabel
-        Glide.with(context).load(listDAta.mediaImageUrl).into(holder.img_dp_courses)
+        Glide.with(context).load(R.drawable.ic_course_dp).into(holder.img_dp_courses)
         holder.tv_amount_courses.text = listDAta.finalAmountLabel
         holder.tv_GCERT_courses.text = listDAta.name
         holder.tv_video_courses.text = listDAta.labelTotalVideos

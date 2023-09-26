@@ -21,18 +21,23 @@
             android:layout_height="match_parent"
             android:background="@drawable/item_testimonial_border_shape"
           >
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/img_testimonial"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/img_cardview"
+                app:cardCornerRadius="7dp"
                 android:layout_width="230dp"
                 android:layout_height="120dp"
-                android:background="@drawable/img_shape_testimonial"
-                android:clipToOutline="true"
                 android:layout_margin="15dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_testimonial"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <ImageView
+                    android:id="@+id/img_testimonial"
+                    android:layout_width="match_parent"
+                    android:src="@drawable/ic_testimonial"
+                    android:scaleType="fitXY"
+                    android:layout_height="match_parent"/>
+            </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_name_testimonial"
@@ -44,8 +49,8 @@
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/img_testimonial"
-                app:layout_constraintTop_toBottomOf="@id/img_testimonial" />
+                app:layout_constraintStart_toStartOf="@id/img_cardview"
+                app:layout_constraintTop_toBottomOf="@id/img_cardview" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_desc_testimonial"
@@ -58,7 +63,7 @@
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="5dp"
-                app:layout_constraintStart_toStartOf="@id/img_testimonial"
+                app:layout_constraintStart_toStartOf="@id/img_cardview"
                 app:layout_constraintTop_toBottomOf="@id/tv_name_testimonial" />
 
             <androidx.appcompat.widget.AppCompatTextView
