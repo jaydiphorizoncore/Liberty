@@ -16,28 +16,28 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.DailyQuizActivity"
+            android:name=".ui.dashboard.activity.DailyQuizActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.ToppersActivity"
+            android:name=".ui.dashboard.activity.ToppersActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.TestimonialActivity"
+            android:name=".ui.dashboard.activity.TestimonialActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.CategoryActivity"
+            android:name=".ui.dashboard.activity.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.CoursesActivity"
+            android:name=".ui.dashboard.activity.CoursesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.PackageActivity"
+            android:name=".ui.dashboard.activity.PackageActivity"
             android:exported="false" />
         <activity
-            android:name=".PasswordActivity"
+            android:name=".ui.authentication.passwordactivity.PasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.authentication.loginactivity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.dashboard.MainActivity"
             android:exported="false" />
     </application>
 

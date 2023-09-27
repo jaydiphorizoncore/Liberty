@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView"
+    <ImageView
+        android:id="@+id/idIVImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="fitXY"
-        android:src="@color/black" />
+        android:background="@color/black" />
 
 </RelativeLayout>
