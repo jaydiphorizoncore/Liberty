@@ -1,9 +1,8 @@
-package com.example.liberty.ui.authentication.loginactivity.viewmodel
+package com.example.liberty.ui.authentication.loginactivity
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.liberty.data.repository.ApiRepository
-import com.example.liberty.ui.authentication.loginactivity.LoginInterface
 import com.example.liberty.data.network.request.loginrequest.LoginRequest
 import com.example.liberty.util.ApiException
 import com.example.liberty.util.AppConstants

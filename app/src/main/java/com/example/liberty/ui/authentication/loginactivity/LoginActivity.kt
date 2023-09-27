@@ -15,8 +15,6 @@ import com.example.liberty.databinding.ActivityLoginBinding
 import com.example.liberty.data.network.ApiInterface
 import com.example.liberty.data.repository.ApiRepository
 import com.example.liberty.data.network.response.loginresponse.LoginResponse
-import com.example.liberty.ui.authentication.loginactivity.viewmodel.LoginViewModel
-import com.example.liberty.ui.authentication.loginactivity.viewmodel.LoginViewModelFactory
 
 class LoginActivity : AppCompatActivity(), LoginInterface {
     companion object {

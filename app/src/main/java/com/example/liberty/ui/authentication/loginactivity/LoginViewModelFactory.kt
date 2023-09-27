@@ -1,4 +1,4 @@
-package com.example.liberty.ui.authentication.loginactivity.viewmodel
+package com.example.liberty.ui.authentication.loginactivity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

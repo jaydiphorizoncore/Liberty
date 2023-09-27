@@ -1,4 +1,4 @@
-package com.example.liberty.ui.dashboard.home.`image-slider`
+package com.example.liberty.ui.dashboard.home.imageslider
 
 import android.content.Context
 import android.view.LayoutInflater

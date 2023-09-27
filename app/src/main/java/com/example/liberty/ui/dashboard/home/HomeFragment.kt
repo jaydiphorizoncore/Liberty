@@ -6,19 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.example.liberty.R
 import com.example.liberty.data.network.ApiInterface
 import com.example.liberty.data.repository.ApiRepository
 import com.example.liberty.data.network.response.dashboardresponse.BannerData
 import com.example.liberty.data.network.response.dashboardresponse.DashboardResponse
+import com.example.liberty.databinding.FragmentHomeBinding
 import com.example.liberty.ui.dashboard.activity.CategoryActivity
 import com.example.liberty.ui.dashboard.activity.CoursesActivity
 import com.example.liberty.ui.dashboard.activity.DailyQuizActivity
@@ -34,38 +31,17 @@ import com.example.liberty.ui.dashboard.home.packages.adapter.PackageAdapter
 import com.example.liberty.ui.dashboard.home.testimonials.adapter.TestimonialAdapter
 import com.example.liberty.ui.dashboard.home.toppers.adapter.ToppersAdapter
 import com.example.liberty.ui.dashboard.home.packages.model.PackageData
-import com.example.liberty.ui.dashboard.home.`image-slider`.ViewPagerAdapter
+import com.example.liberty.ui.dashboard.home.imageslider.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 
 
 class HomeFragment : Fragment(), DashboardInterface {
-    private lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager
+    private lateinit var binding: FragmentHomeBinding
+
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var imageList: List<BannerData>
-    private lateinit var progressBar: ProgressBar
-    private lateinit var tvDataNotFound: TextView
-
-    private lateinit var btnAllCourses: Button
-    private lateinit var btnPopular: Button
-    private lateinit var btnNewest: Button
-    private lateinit var btnAdvance: Button
-
-    private lateinit var tvPackage: TextView
-    private lateinit var tvCourses: TextView
-    private lateinit var tvCategory: TextView
-    private lateinit var tvTestimonial: TextView
-    private lateinit var tvToppers: TextView
-    private lateinit var tvDailyQuiz: TextView
-
-    private lateinit var packageRecyclerView: RecyclerView
-    private lateinit var coursesRecyclerView: RecyclerView
-    private lateinit var categoryRecyclerView: RecyclerView
-    private lateinit var testimonialRecyclerView: RecyclerView
-    private lateinit var toppersRecyclerView: RecyclerView
-    private lateinit var dailyQuizRecyclerView: RecyclerView
 
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var testimonialAdapter: TestimonialAdapter
@@ -75,14 +51,12 @@ class HomeFragment : Fragment(), DashboardInterface {
 
     private lateinit var viewModel: ApiViewModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        initView(view)
         clickListener()
         preparePackageRecyclerView()
         prepareCoursesRecyclerView()
@@ -98,38 +72,35 @@ class HomeFragment : Fragment(), DashboardInterface {
         viewModel.dashboardInterface = this
         viewModel.getDashboard()
 
-        return view
+        return binding.root
     }
 
     private fun clickListener() {
-        tvPackage.setOnClickListener {
+        binding.tvPackage.setOnClickListener {
             val i = Intent(context, PackageActivity::class.java)
             startActivity(i)
         }
-        tvCourses.setOnClickListener {
+        binding.tvCourses.setOnClickListener {
             val i = Intent(context, CoursesActivity::class.java)
             startActivity(i)
         }
-        tvCategory.setOnClickListener {
+        binding.tvCategory.setOnClickListener {
             val i = Intent(context, CategoryActivity::class.java)
             startActivity(i)
         }
-        tvTestimonial.setOnClickListener {
+        binding.tvTestimonial.setOnClickListener {
             val i = Intent(context, TestimonialActivity::class.java)
             startActivity(i)
         }
-        tvToppers.setOnClickListener {
+        binding.tvToppers.setOnClickListener {
             val i = Intent(context, ToppersActivity::class.java)
             startActivity(i)
         }
-        tvDailyQuiz.setOnClickListener {
+        binding.tvDailyQuiz.setOnClickListener {
             val i = Intent(context, DailyQuizActivity::class.java)
             startActivity(i)
         }
-
-
     }
-
 
     private fun preparePackageRecyclerView() {
         val itemList = ArrayList<PackageData>()
@@ -190,18 +161,18 @@ class HomeFragment : Fragment(), DashboardInterface {
         )
 
         val packageRecyclerAdapter = PackageAdapter(itemList)
-        packageRecyclerView.adapter = packageRecyclerAdapter
+        binding.recyclerPackages.adapter = packageRecyclerAdapter
     }
 
     private fun prepareCoursesRecyclerView() {
         coursesAdapter = CoursesAdapter(requireContext(), ArrayList())
-        coursesRecyclerView.adapter = coursesAdapter
+        binding.recyclerCourses.adapter = coursesAdapter
     }
 
     private fun prepareCategoryRecyclerView() {
 
         categoryAdapter = CategoryAdapter(requireContext(), ArrayList())
-        categoryRecyclerView.apply {
+        binding.recyclerCategory.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = categoryAdapter
@@ -212,7 +183,7 @@ class HomeFragment : Fragment(), DashboardInterface {
     private fun prepareTestimonialRecyclerView() {
         testimonialAdapter = TestimonialAdapter(requireContext(), ArrayList())
 
-        testimonialRecyclerView.apply {
+        binding.recyclerTestimonial.apply {
             setHasFixedSize(true)
             adapter = testimonialAdapter
         }
@@ -221,28 +192,27 @@ class HomeFragment : Fragment(), DashboardInterface {
     private fun prepareToppersRecyclerView() {
 
         toppersAdapter = ToppersAdapter(requireContext(), ArrayList())
-        toppersRecyclerView.adapter = toppersAdapter
+        binding.recyclerTopper.adapter = toppersAdapter
 
     }
 
     private fun prepareDailyQuizRecyclerView() {
         quizAdapter = DailyQuizAdapter(requireContext(), ArrayList())
-        dailyQuizRecyclerView.adapter = quizAdapter
+        binding.recyclerDailyQuiz.adapter = quizAdapter
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        tabLayout.addTab(tabLayout.newTab())
-        tabLayout.addTab(tabLayout.newTab())
-        tabLayout.addTab(tabLayout.newTab())
+        binding.tabLl.addTab(binding.tabLl.newTab())
+        binding.tabLl.addTab(binding.tabLl.newTab())
+        binding.tabLl.addTab(binding.tabLl.newTab())
 
-        viewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(tabLayout))
-        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+        binding.viewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(binding.tabLl))
+        binding.tabLl.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager.currentItem = tab.position
+                binding.viewPager.currentItem = tab.position
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -253,41 +223,14 @@ class HomeFragment : Fragment(), DashboardInterface {
         })
     }
 
-    private fun initView(view: View) {
-        tabLayout = view.findViewById(R.id.tab_ll)
-        viewPager = view.findViewById(R.id.viewPager)
-        progressBar = view.findViewById(R.id.home_progress)
-        tvDataNotFound = view.findViewById(R.id.tv_dataNotFound)
-
-        btnAllCourses = view.findViewById(R.id.btn_allCourse)
-        btnPopular = view.findViewById(R.id.btn_popular)
-        btnNewest = view.findViewById(R.id.btn_newest)
-        btnAdvance = view.findViewById(R.id.btn_advance)
-
-        tvPackage = view.findViewById(R.id.tv_package)
-        tvCourses = view.findViewById(R.id.tv_courses)
-        tvCategory = view.findViewById(R.id.tv_category)
-        tvTestimonial = view.findViewById(R.id.tv_testimonial)
-        tvToppers = view.findViewById(R.id.tv_toppers)
-        tvDailyQuiz = view.findViewById(R.id.tv_DailyQuiz)
-
-        packageRecyclerView = view.findViewById(R.id.recycler_packages)
-        coursesRecyclerView = view.findViewById(R.id.recycler_courses)
-        categoryRecyclerView = view.findViewById(R.id.recycler_category)
-        testimonialRecyclerView = view.findViewById(R.id.recycler_testimonial)
-        toppersRecyclerView = view.findViewById(R.id.recycler_topper)
-        dailyQuizRecyclerView = view.findViewById(R.id.recycler_DailyQuiz)
-
-
-    }
 
     override fun onStarted() {
         Log.d("TAG", "onStartedDashBoard")
     }
 
     override fun onSuccess(dashboardResponse: DashboardResponse?) {
-        progressBar.visibility = View.INVISIBLE
-        btnAllCourses.isSelected = true
+        binding.homeProgress.visibility = View.INVISIBLE
+        binding.btnAllCourse.isSelected = true
         if (dashboardResponse != null) {
             Log.d("TAG", "onSuccess")
 
@@ -296,7 +239,7 @@ class HomeFragment : Fragment(), DashboardInterface {
             imageList = dashboardResponse.data.bannerData
 
             viewPagerAdapter = ViewPagerAdapter(requireContext(), imageList)
-            viewPager.adapter = viewPagerAdapter
+            binding.viewPager.adapter = viewPagerAdapter
 
             categoryAdapter.setData(dashboardResponse.data.categories)
             testimonialAdapter.setData(dashboardResponse.data.testimonials.testimonialsData)
@@ -304,44 +247,44 @@ class HomeFragment : Fragment(), DashboardInterface {
             quizAdapter.setData(dashboardResponse.data.tests)
 
             coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
-            btnAllCourses.setOnClickListener {
-                btnAllCourses.setBackgroundResource(R.drawable.button_style)
-                btnAllCourses.isSelected = true
-                btnPopular.isSelected = false
-                btnAdvance.isSelected = false
-                btnNewest.isSelected = false
+            binding.btnAllCourse.setOnClickListener {
+                binding.btnAllCourse.setBackgroundResource(R.drawable.button_style)
+                binding.btnAllCourse.isSelected = true
+                binding.btnPopular.isSelected = false
+                binding.btnAdvance.isSelected = false
+                binding.btnNewest.isSelected = false
                 coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
-                coursesRecyclerView.visibility = View.VISIBLE
-                tvDataNotFound.visibility = View.INVISIBLE
+                binding.recyclerCourses.visibility = View.VISIBLE
+                binding.tvDataNotFound.visibility = View.INVISIBLE
             }
-            btnPopular.setOnClickListener {
-                btnPopular.setBackgroundResource(R.drawable.button_style)
-                btnAllCourses.isSelected = false
-                btnPopular.isSelected = true
-                btnAdvance.isSelected = false
-                btnNewest.isSelected = false
+            binding.btnPopular.setOnClickListener {
+                binding.btnPopular.setBackgroundResource(R.drawable.button_style)
+                binding.btnAllCourse.isSelected = false
+                binding.btnPopular.isSelected = true
+                binding.btnAdvance.isSelected = false
+                binding.btnNewest.isSelected = false
                 coursesAdapter.setAllData(dashboardResponse.data.courses.popularCourses.courses)
-                coursesRecyclerView.visibility = View.VISIBLE
-                tvDataNotFound.visibility = View.INVISIBLE
+                binding.recyclerCourses.visibility = View.VISIBLE
+                binding.tvDataNotFound.visibility = View.INVISIBLE
             }
-            btnAdvance.setOnClickListener {
-                btnPopular.setBackgroundResource(R.drawable.button_style)
-                btnAllCourses.isSelected = false
-                btnPopular.isSelected = false
-                btnAdvance.isSelected = true
-                btnNewest.isSelected = false
+            binding.btnAdvance.setOnClickListener {
+                binding.btnPopular.setBackgroundResource(R.drawable.button_style)
+                binding.btnAllCourse.isSelected = false
+                binding.btnPopular.isSelected = false
+                binding.btnAdvance.isSelected = true
+                binding.btnNewest.isSelected = false
                 coursesAdapter.setAllData(dashboardResponse.data.courses.advanceCourses.courses)
-                coursesRecyclerView.visibility = View.VISIBLE
-                tvDataNotFound.visibility = View.INVISIBLE
+                binding.recyclerCourses.visibility = View.VISIBLE
+                binding.tvDataNotFound.visibility = View.INVISIBLE
             }
-            btnNewest.setOnClickListener {
-                btnPopular.setBackgroundResource(R.drawable.button_style)
-                btnAllCourses.isSelected = false
-                btnPopular.isSelected = false
-                btnAdvance.isSelected = false
-                btnNewest.isSelected = true
-                coursesRecyclerView.visibility = View.INVISIBLE
-                tvDataNotFound.visibility = View.VISIBLE
+            binding.btnNewest.setOnClickListener {
+                binding.btnPopular.setBackgroundResource(R.drawable.button_style)
+                binding.btnAllCourse.isSelected = false
+                binding.btnPopular.isSelected = false
+                binding.btnAdvance.isSelected = false
+                binding.btnNewest.isSelected = true
+                binding.recyclerCourses.visibility = View.INVISIBLE
+                binding.tvDataNotFound.visibility = View.VISIBLE
             }
 
         }
