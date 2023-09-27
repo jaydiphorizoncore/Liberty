@@ -34,7 +34,7 @@ import com.example.liberty.ui.dashboard.home.packages.adapter.PackageAdapter
 import com.example.liberty.ui.dashboard.home.testimonials.adapter.TestimonialAdapter
 import com.example.liberty.ui.dashboard.home.toppers.adapter.ToppersAdapter
 import com.example.liberty.ui.dashboard.home.packages.model.PackageData
-import com.example.liberty.ui.dashboard.home.viewpagerFragment.ViewPagerAdapter
+import com.example.liberty.ui.dashboard.home.`image-slider`.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
@@ -234,17 +234,12 @@ class HomeFragment : Fragment(), DashboardInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_circle_tab))
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_circle_tab))*/
-        tabLayout.addTab(tabLayout.newTab())
-        tabLayout.addTab(tabLayout.newTab())
-        tabLayout.addTab(tabLayout.newTab())
 
-        //  val adapter = ViewPagerAdapter(parentFragmentManager, tabLayout.tabCount)
-        // viewPager.adapter = adapter
+        tabLayout.addTab(tabLayout.newTab())
+        tabLayout.addTab(tabLayout.newTab())
+        tabLayout.addTab(tabLayout.newTab())
 
         viewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(tabLayout))
-
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager.currentItem = tab.position
@@ -347,7 +342,6 @@ class HomeFragment : Fragment(), DashboardInterface {
                 btnNewest.isSelected = true
                 coursesRecyclerView.visibility = View.INVISIBLE
                 tvDataNotFound.visibility = View.VISIBLE
-
             }
 
         }

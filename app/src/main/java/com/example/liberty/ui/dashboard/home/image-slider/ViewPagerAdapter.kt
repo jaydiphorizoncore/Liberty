@@ -1,4 +1,4 @@
-package com.example.liberty.ui.dashboard.home.viewpagerFragment
+package com.example.liberty.ui.dashboard.home.`image-slider`
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -30,7 +30,7 @@ class ViewPagerAdapter(val context: Context, private val imageList: List<BannerD
 
         // on below line we are inflating our custom
         // layout file which we have created.
-        val itemView: View = mLayoutInflater.inflate(R.layout.fragment_image_page, container, false)
+        val itemView: View = mLayoutInflater.inflate(R.layout.image_slider, container, false)
 
         // on below line we are initializing
         // our image view with the id.

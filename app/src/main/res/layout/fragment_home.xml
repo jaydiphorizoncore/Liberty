@@ -18,10 +18,10 @@
                 android:id="@+id/home_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/viewPager"
                 app:layout_constraintLeft_toLeftOf="@id/viewPager"
                 app:layout_constraintRight_toRightOf="@id/viewPager"
-                app:layout_constraintTop_toTopOf="@id/viewPager"
-                app:layout_constraintBottom_toBottomOf="@id/viewPager"/>
+                app:layout_constraintTop_toTopOf="@id/viewPager" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
@@ -164,9 +164,8 @@
                     android:id="@+id/tv_dataNotFound"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/data_not_found"
                     android:gravity="center"
+                    android:text="@string/data_not_found"
                     android:textSize="20sp"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/recycler_courses"
