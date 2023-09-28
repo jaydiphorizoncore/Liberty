@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val apiRepository:ApiRepository) : ViewModel() {
+class LoginViewModel(private val apiRepository: ApiRepository) : ViewModel() {
 
     lateinit var loginInterface: LoginInterface
 
@@ -23,16 +23,16 @@ class LoginViewModel(private val apiRepository:ApiRepository) : ViewModel() {
             headers[AppConstants.KEY] = token
 
             val loginRequest = LoginRequest(
-                "1.3.6",
-                "Android SDK built for x86",
-                "Android",
-                "ad8443137d0f2ebb",
-                "Android",
-                1,
-                "fqUCJxeQQjmuQxQ7oJyV1i:APA91bFnUyxv9E8gWbGfENAwNMWsk65pu-RuqrTBrBdhjxjjEisSKiKdI9W7JcwwPz9DqL8kaxGRq3UAl6T_JKwo8lR1agu6GAvLnqipP7zq2ahqsmZlAII9eVHIZwlnocRvuLWbTIpt",
-                "11",
-                "login",
-                "1212121212"
+                appVersion = "1.3.6",
+                deviceModel = "Android SDK built for x86",
+                deviceName = "Android",
+                deviceNo = "ad8443137d0f2ebb",
+                devicePlatform = "Android",
+                deviceType = 1,
+                deviceUuid = "fqUCJxeQQjmuQxQ7oJyV1i:APA91bFnUyxv9E8gWbGfENAwNMWsk65pu-RuqrTBrBdhjxjjEisSKiKdI9W7JcwwPz9DqL8kaxGRq3UAl6T_JKwo8lR1agu6GAvLnqipP7zq2ahqsmZlAII9eVHIZwlnocRvuLWbTIpt",
+                deviceVersion = "11",
+                mode = "login",
+                username = "1212121212"
             )
             try {
 
@@ -45,6 +45,7 @@ class LoginViewModel(private val apiRepository:ApiRepository) : ViewModel() {
             } catch (e: ApiException) {
                 loginInterface.onFailure(e.message!!)
             } catch (e: Exception) {
+                loginInterface.onFailure(e.message!!)
                 Log.e(this::class.simpleName, e.message.toString())
                 Log.e("Exception", "Exception: $e")
             }

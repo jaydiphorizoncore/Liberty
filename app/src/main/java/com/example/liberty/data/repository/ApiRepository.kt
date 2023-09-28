@@ -2,9 +2,11 @@ package com.example.liberty.data.repository
 
 import com.example.liberty.data.network.ApiInterface
 import com.example.liberty.data.network.SafeApiRequest
+import com.example.liberty.data.network.request.coursesdetailsrequest.CoursesDetailsRequest
 import com.example.liberty.data.network.request.loginrequest.LoginRequest
 import com.example.liberty.data.network.response.loginresponse.LoginResponse
 import com.example.liberty.data.network.request.dashboardrequest.DashboardRequest
+import com.example.liberty.data.network.response.coursesdetailsresponse.CoursesDetailsResponse
 import com.example.liberty.data.network.response.dashboardresponse.DashboardResponse
 
 class ApiRepository(private val apiInterface: ApiInterface) : SafeApiRequest() {
@@ -22,4 +24,12 @@ class ApiRepository(private val apiInterface: ApiInterface) : SafeApiRequest() {
     ): LoginResponse? {
         return apiRequest { apiInterface.checkUserName(headerMap, loginRequest) }
     }
+
+    suspend fun getCoursesDetails(
+        headerMap: Map<String, String>,
+        coursesDetailsRequest: CoursesDetailsRequest
+    ): CoursesDetailsResponse? {
+        return apiRequest { apiInterface.getCoursesDetails(headerMap, coursesDetailsRequest) }
+    }
+
 }

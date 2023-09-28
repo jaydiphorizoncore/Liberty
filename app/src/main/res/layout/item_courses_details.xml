@@ -7,28 +7,26 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="230dp">
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#95D0E3"
             app:cardCornerRadius="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/item_courses_ll"
+                android:id="@+id/item_courses_details_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_popular_courses"
+                    android:id="@+id/tv_popular_courses_details"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -43,17 +41,17 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_dp_courses"
+                    android:id="@+id/img_dp_courses_details"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/ic_course_dp"
-                    app:layout_constraintStart_toEndOf="@id/tv_popular_courses"
+                    app:layout_constraintStart_toEndOf="@id/tv_popular_courses_details"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_amount_courses"
+                    android:id="@+id/tv_amount_courses_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -65,7 +63,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_GCERT_courses"
+                    android:id="@+id/tv_GCERT_courses_details"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="20dp"
@@ -75,10 +73,10 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/img_dp_courses" />
+                    app:layout_constraintTop_toBottomOf="@id/img_dp_courses_details" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_video_courses"
+                    android:id="@+id/tv_video_courses_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10sp"
@@ -94,10 +92,10 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_GCERT_courses" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_GCERT_courses_details" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_materials_courses"
+                    android:id="@+id/tv_materials_courses_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -109,11 +107,11 @@
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/tv_video_courses"
-                    app:layout_constraintTop_toBottomOf="@id/tv_GCERT_courses" />
+                    app:layout_constraintStart_toEndOf="@id/tv_video_courses_details"
+                    app:layout_constraintTop_toBottomOf="@id/tv_GCERT_courses_details" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_tests_courses"
+                    android:id="@+id/tv_tests_courses_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
@@ -127,8 +125,8 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_materials_courses"
-                    app:layout_constraintTop_toBottomOf="@id/tv_GCERT_courses" />
+                    app:layout_constraintStart_toEndOf="@id/tv_materials_courses_details"
+                    app:layout_constraintTop_toBottomOf="@id/tv_GCERT_courses_details" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

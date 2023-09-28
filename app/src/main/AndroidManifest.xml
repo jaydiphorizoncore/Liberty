@@ -16,22 +16,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.dashboard.activity.DailyQuizActivity"
+            android:name=".ui.dashboard.home.quiz.quizdetailsactivity.DailyQuizActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dashboard.activity.ToppersActivity"
+            android:name=".ui.dashboard.home.toppers.toppersdetailsactivity.ToppersActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dashboard.activity.TestimonialActivity"
+            android:name=".ui.dashboard.home.testimonials.testimonialdetailsactivity.TestimonialActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dashboard.activity.CategoryActivity"
+            android:name=".ui.dashboard.home.category.categorydetailsactivity.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dashboard.activity.CoursesActivity"
+            android:name=".ui.dashboard.home.courses.coursesdetailsactivity.CoursesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dashboard.activity.PackageActivity"
+            android:name=".ui.dashboard.home.packages.packagedetailsactivity.PackageActivity"
             android:exported="false" />
         <activity
             android:name=".ui.authentication.passwordactivity.PasswordActivity"

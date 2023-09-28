@@ -9,19 +9,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.liberty.R
 import com.example.liberty.data.network.ApiInterface
 import com.example.liberty.data.repository.ApiRepository
 import com.example.liberty.data.network.response.dashboardresponse.BannerData
 import com.example.liberty.data.network.response.dashboardresponse.DashboardResponse
 import com.example.liberty.databinding.FragmentHomeBinding
-import com.example.liberty.ui.dashboard.activity.CategoryActivity
-import com.example.liberty.ui.dashboard.activity.CoursesActivity
-import com.example.liberty.ui.dashboard.activity.DailyQuizActivity
-import com.example.liberty.ui.dashboard.activity.PackageActivity
-import com.example.liberty.ui.dashboard.activity.TestimonialActivity
-import com.example.liberty.ui.dashboard.activity.ToppersActivity
+import com.example.liberty.ui.dashboard.home.category.categorydetailsactivity.CategoryActivity
+import com.example.liberty.ui.dashboard.home.courses.coursesdetailsactivity.CoursesActivity
+import com.example.liberty.ui.dashboard.home.quiz.quizdetailsactivity.DailyQuizActivity
+import com.example.liberty.ui.dashboard.home.packages.packagedetailsactivity.PackageActivity
+import com.example.liberty.ui.dashboard.home.testimonials.testimonialdetailsactivity.TestimonialActivity
+import com.example.liberty.ui.dashboard.home.toppers.toppersdetailsactivity.ToppersActivity
 import com.example.liberty.ui.dashboard.home.viewmodel.ApiViewModel
 import com.example.liberty.ui.dashboard.home.viewmodel.ViewModelFactory
 import com.example.liberty.ui.dashboard.home.category.adapter.CategoryAdapter
@@ -58,12 +57,7 @@ class HomeFragment : Fragment(), DashboardInterface {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         clickListener()
-        preparePackageRecyclerView()
-        prepareCoursesRecyclerView()
-        prepareCategoryRecyclerView()
-        prepareTestimonialRecyclerView()
-        prepareToppersRecyclerView()
-        prepareDailyQuizRecyclerView()
+
 
         val api = ApiInterface()
         val repository = ApiRepository(api)
@@ -72,33 +66,41 @@ class HomeFragment : Fragment(), DashboardInterface {
         viewModel.dashboardInterface = this
         viewModel.getDashboard()
 
+        preparePackageRecyclerView()
+        prepareCoursesRecyclerView()
+        prepareCategoryRecyclerView()
+        prepareTestimonialRecyclerView()
+        prepareToppersRecyclerView()
+        prepareDailyQuizRecyclerView()
+
         return binding.root
     }
 
+
+
     private fun clickListener() {
+
         binding.tvPackage.setOnClickListener {
-            val i = Intent(context, PackageActivity::class.java)
-            startActivity(i)
+            val i = Intent(requireContext(), PackageActivity::class.java)
+            requireContext().startActivity(i)
         }
-        binding.tvCourses.setOnClickListener {
-            val i = Intent(context, CoursesActivity::class.java)
-            startActivity(i)
-        }
+
+
         binding.tvCategory.setOnClickListener {
-            val i = Intent(context, CategoryActivity::class.java)
-            startActivity(i)
+            val i = Intent(requireContext(), CategoryActivity::class.java)
+            requireContext().startActivity(i)
         }
         binding.tvTestimonial.setOnClickListener {
-            val i = Intent(context, TestimonialActivity::class.java)
-            startActivity(i)
+            val i = Intent(requireContext(), TestimonialActivity::class.java)
+            requireContext().startActivity(i)
         }
         binding.tvToppers.setOnClickListener {
-            val i = Intent(context, ToppersActivity::class.java)
-            startActivity(i)
+            val i = Intent(requireContext(), ToppersActivity::class.java)
+            requireContext().startActivity(i)
         }
         binding.tvDailyQuiz.setOnClickListener {
-            val i = Intent(context, DailyQuizActivity::class.java)
-            startActivity(i)
+            val i = Intent(requireContext(), DailyQuizActivity::class.java)
+            requireContext().startActivity(i)
         }
     }
 
@@ -172,21 +174,15 @@ class HomeFragment : Fragment(), DashboardInterface {
     private fun prepareCategoryRecyclerView() {
 
         categoryAdapter = CategoryAdapter(requireContext(), ArrayList())
-        binding.recyclerCategory.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = categoryAdapter
-        }
+        binding.recyclerCategory.adapter = categoryAdapter
 
     }
 
     private fun prepareTestimonialRecyclerView() {
         testimonialAdapter = TestimonialAdapter(requireContext(), ArrayList())
 
-        binding.recyclerTestimonial.apply {
-            setHasFixedSize(true)
-            adapter = testimonialAdapter
-        }
+        binding.recyclerTestimonial.adapter = testimonialAdapter
+
     }
 
     private fun prepareToppersRecyclerView() {
@@ -226,10 +222,11 @@ class HomeFragment : Fragment(), DashboardInterface {
 
     override fun onStarted() {
         Log.d("TAG", "onStartedDashBoard")
+        binding.homeProgress.visibility = View.VISIBLE
     }
 
     override fun onSuccess(dashboardResponse: DashboardResponse?) {
-        binding.homeProgress.visibility = View.INVISIBLE
+        binding.homeProgress.visibility = View.GONE
         binding.btnAllCourse.isSelected = true
         if (dashboardResponse != null) {
             Log.d("TAG", "onSuccess")
@@ -247,6 +244,7 @@ class HomeFragment : Fragment(), DashboardInterface {
             quizAdapter.setData(dashboardResponse.data.tests)
 
             coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
+
             binding.btnAllCourse.setOnClickListener {
                 binding.btnAllCourse.setBackgroundResource(R.drawable.button_style)
                 binding.btnAllCourse.isSelected = true
@@ -286,13 +284,15 @@ class HomeFragment : Fragment(), DashboardInterface {
                 binding.recyclerCourses.visibility = View.INVISIBLE
                 binding.tvDataNotFound.visibility = View.VISIBLE
             }
-
+        }
+        binding.tvCourses.setOnClickListener {
+            val i = Intent(requireContext(), CoursesActivity::class.java)
+            requireContext().startActivity(i)
         }
     }
 
-
     override fun onFailure(message: String) {
+        binding.homeProgress.visibility = View.GONE
         Log.d("TAG", "onFailure")
     }
-
 }

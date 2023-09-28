@@ -10,19 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.liberty.R
 import com.example.liberty.data.network.response.dashboardresponse.TopersData
+import com.example.liberty.databinding.ItemToppersBinding
 
-class ToppersAdapter(private val context: Context,private var listData: ArrayList<TopersData>) :
+class ToppersAdapter(private val context: Context, private var listData: ArrayList<TopersData>) :
     RecyclerView.Adapter<ToppersAdapter.ViewHolder>() {
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imgToppers: ImageView = itemView.findViewById(R.id.img_topper)
-        var tvTopperName: TextView = itemView.findViewById(R.id.tv_name_topper)
-        var tvTopperClass: TextView = itemView.findViewById(R.id.tv_class_topper)
+    class ViewHolder(val binding: ItemToppersBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_toppers, parent, false)
+            ItemToppersBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 
@@ -33,14 +31,13 @@ class ToppersAdapter(private val context: Context,private var listData: ArrayLis
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemList = listData[position]
 
-       Glide.with(context).load(itemList.image).into(holder.imgToppers)
-        holder.tvTopperName.text = itemList.name
-        holder.tvTopperClass.text =itemList.courseName
+        Glide.with(context).load(itemList.image).into(holder.binding.imgTopper)
+        holder.binding.tvNameTopper.text = itemList.name
+        holder.binding.tvClassTopper.text = itemList.courseName
     }
 
-    fun setData(itemList: List<TopersData>){
+    fun setData(itemList: List<TopersData>) {
         this.listData = itemList as ArrayList<TopersData>
         notifyDataSetChanged()
     }
-
 }

@@ -1,7 +1,9 @@
 package com.example.liberty.data.network
 
+import com.example.liberty.data.network.request.coursesdetailsrequest.CoursesDetailsRequest
 import com.example.liberty.data.network.request.dashboardrequest.DashboardRequest
 import com.example.liberty.data.network.request.loginrequest.LoginRequest
+import com.example.liberty.data.network.response.coursesdetailsresponse.CoursesDetailsResponse
 import com.example.liberty.data.network.response.dashboardresponse.DashboardResponse
 import com.example.liberty.data.network.response.loginresponse.LoginResponse
 import com.example.liberty.util.AppConstants
@@ -18,8 +20,8 @@ import retrofit2.http.POST
 
 interface ApiInterface {
 
-/*    @POST("check-username") // Adjust the endpoint as needed
-    fun checkUserName(@Body request: LoginRequest): Call<LoginResponse>*/
+    /*    @POST("check-username") // Adjust the endpoint as needed
+        fun checkUserName(@Body request: LoginRequest): Call<LoginResponse>*/
 
     @POST("check-username")
     suspend fun checkUserName(
@@ -32,6 +34,12 @@ interface ApiInterface {
         @HeaderMap headerMap: Map<String, String>,
         @Body dashboardRequest: DashboardRequest
     ): Response<DashboardResponse>
+
+    @POST("member/get-tag-vise-courses-data")
+    suspend fun getCoursesDetails(
+        @HeaderMap headerMap: Map<String, String>,
+        @Body coursesDetailsRequest: CoursesDetailsRequest
+    ): Response<CoursesDetailsResponse>
 
 
     companion object {
