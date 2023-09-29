@@ -60,7 +60,6 @@ class HomeFragment : Fragment(), DashboardInterface {
 
         clickListener()
 
-
         val api = ApiInterface()
         val repository = ApiRepository(api)
         val factory = ViewModelFactory(repository)
@@ -75,6 +74,7 @@ class HomeFragment : Fragment(), DashboardInterface {
 
     private fun clickListener() {
 
+
         binding.tvPackage.setOnClickListener {
             val i = Intent(requireContext(), PackageActivity::class.java)
             requireContext().startActivity(i)
@@ -82,6 +82,7 @@ class HomeFragment : Fragment(), DashboardInterface {
 
         binding.tvCategory.setOnClickListener {
             val i = Intent(requireContext(), CategoryActivity::class.java)
+
             requireContext().startActivity(i)
         }
         binding.tvTestimonial.setOnClickListener {
@@ -215,6 +216,7 @@ class HomeFragment : Fragment(), DashboardInterface {
             coursesAdapter =
                 CoursesAdapter(requireContext(), dashboardResponse.data.courses.allCourses.courses)
             binding.recyclerCourses.adapter = coursesAdapter
+            binding.tvDataNotFound.visibility = View.GONE
 
             binding.btnAllCourse.setOnClickListener {
                 i = ""
@@ -225,11 +227,11 @@ class HomeFragment : Fragment(), DashboardInterface {
                 binding.btnNewest.isSelected = false
 
                 if (dashboardResponse.data.courses.allCourses.courses.isNullOrEmpty()) {
-                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.recyclerCourses.visibility = View.GONE
                     binding.tvDataNotFound.visibility = View.VISIBLE
                 } else {
                     binding.recyclerCourses.visibility = View.VISIBLE
-                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.GONE
                     coursesAdapter = CoursesAdapter(
                         requireContext(),
                         dashboardResponse.data.courses.allCourses.courses
@@ -246,11 +248,11 @@ class HomeFragment : Fragment(), DashboardInterface {
                 binding.btnNewest.isSelected = false
 
                 if (dashboardResponse.data.courses.popularCourses.courses.isNullOrEmpty()) {
-                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.recyclerCourses.visibility = View.GONE
                     binding.tvDataNotFound.visibility = View.VISIBLE
                 } else {
                     binding.recyclerCourses.visibility = View.VISIBLE
-                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.GONE
                     coursesAdapter = CoursesAdapter(
                         requireContext(),
                         dashboardResponse.data.courses.popularCourses.courses
@@ -267,11 +269,11 @@ class HomeFragment : Fragment(), DashboardInterface {
                 binding.btnNewest.isSelected = false
 
                 if (dashboardResponse.data.courses.advanceCourses.courses.isNullOrEmpty()) {
-                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.recyclerCourses.visibility = View.GONE
                     binding.tvDataNotFound.visibility = View.VISIBLE
                 } else {
                     binding.recyclerCourses.visibility = View.VISIBLE
-                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.GONE
                     coursesAdapter = CoursesAdapter(
                         requireContext(),
                         dashboardResponse.data.courses.advanceCourses.courses
@@ -287,11 +289,11 @@ class HomeFragment : Fragment(), DashboardInterface {
                 binding.btnAdvance.isSelected = false
                 binding.btnNewest.isSelected = true
                 if (dashboardResponse.data.courses.newestCourses.courses.isNullOrEmpty()) {
-                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.recyclerCourses.visibility = View.GONE
                     binding.tvDataNotFound.visibility = View.VISIBLE
                 } else {
                     binding.recyclerCourses.visibility = View.VISIBLE
-                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.GONE
                     coursesAdapter = CoursesAdapter(
                         requireContext(),
                         dashboardResponse.data.courses.newestCourses.courses

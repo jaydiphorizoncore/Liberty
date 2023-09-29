@@ -38,4 +38,5 @@ class CoursesDetailsAdapter(
         holder.binding.tvMaterialsCoursesDetails.text = itemData.labelTotalMaterials
 
     }
+
 }

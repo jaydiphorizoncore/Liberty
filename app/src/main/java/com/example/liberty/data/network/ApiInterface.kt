@@ -1,8 +1,10 @@
 package com.example.liberty.data.network
 
+import com.example.liberty.data.network.request.categorydetailsrequest.CategoryDetailsRequest
 import com.example.liberty.data.network.request.coursesdetailsrequest.CoursesDetailsRequest
 import com.example.liberty.data.network.request.dashboardrequest.DashboardRequest
 import com.example.liberty.data.network.request.loginrequest.LoginRequest
+import com.example.liberty.data.network.response.categorydetailsresponse.CategoryDetailsResponse
 import com.example.liberty.data.network.response.coursesdetailsresponse.CoursesDetailsResponse
 import com.example.liberty.data.network.response.dashboardresponse.DashboardResponse
 import com.example.liberty.data.network.response.loginresponse.LoginResponse
@@ -40,6 +42,12 @@ interface ApiInterface {
         @HeaderMap headerMap: Map<String, String>,
         @Body coursesDetailsRequest: CoursesDetailsRequest
     ): Response<CoursesDetailsResponse>
+
+    @POST("member/get-category-vise-data")
+    suspend fun getCategoryDetails(
+        @HeaderMap headerMap: Map<String, String>,
+        @Body categoryDetailsRequest: CategoryDetailsRequest
+    ): Response<CategoryDetailsResponse>
 
 
     companion object {

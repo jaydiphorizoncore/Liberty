@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.liberty.R
@@ -13,16 +13,15 @@ import com.example.liberty.data.network.response.coursesdetailsresponse.CoursesD
 import com.example.liberty.data.network.response.coursesdetailsresponse.TagwiseData
 import com.example.liberty.data.repository.ApiRepository
 import com.example.liberty.databinding.ActivityCoursesBinding
-import com.example.liberty.ui.dashboard.home.category.categorydetailsactivity.CoursesDetailsInterface
-import com.example.liberty.ui.dashboard.home.category.categorydetailsactivity.viewmodel.CoursesDetailsViewModel
-import com.example.liberty.ui.dashboard.home.category.categorydetailsactivity.viewmodel.CoursesDetailsViewModelFectory
+import com.example.liberty.ui.dashboard.home.courses.coursesdetailsactivity.viewmodel.CoursesDetailsViewModel
+import com.example.liberty.ui.dashboard.home.courses.coursesdetailsactivity.viewmodel.CoursesDetailsViewModelFectory
 import com.example.liberty.ui.dashboard.home.courses.coursesdetailsactivity.adapter.CoursesDetailsAdapter
-import com.example.liberty.util.toast
 
 class CoursesActivity : AppCompatActivity(), CoursesDetailsInterface {
     private lateinit var binding: ActivityCoursesBinding
     private lateinit var viewModel: CoursesDetailsViewModel
     private lateinit var coursesDetailsAdapter: CoursesDetailsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_courses)
@@ -52,6 +51,35 @@ class CoursesActivity : AppCompatActivity(), CoursesDetailsInterface {
             coursesDetailsAdapter = CoursesDetailsAdapter(this, response.data.tagwiseData)
             binding.coursesDetailsRecyclerView.adapter = coursesDetailsAdapter
         }
+
+        val searchList = response.data.tagwiseData
+        setSearchView(searchList)
+
+    }
+
+    private fun setSearchView(searchList: List<TagwiseData>?) {
+        binding.coursesSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filterName = searchList!!.filter { name ->
+                    name.name.contains(newText!!, true)
+                }
+                coursesDetailsAdapter = CoursesDetailsAdapter(this@CoursesActivity, filterName)
+                coursesDetailsAdapter.notifyDataSetChanged()
+                binding.coursesDetailsRecyclerView.adapter = coursesDetailsAdapter
+
+                // Show/hide the "not found" message
+                if (filterName.isEmpty()) {
+                    binding.tvIsCoursesDataNotFound.visibility = View.VISIBLE
+                } else {
+                    binding.tvIsCoursesDataNotFound.visibility = View.GONE
+                }
+                return true
+            }
+        })
     }
 
     override fun onFailure(message: String) {

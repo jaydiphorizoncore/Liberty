@@ -1,4 +1,4 @@
-package com.example.liberty.ui.dashboard.home.category.categorydetailsactivity.viewmodel
+package com.example.liberty.ui.dashboard.home.courses.coursesdetailsactivity.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -1,4 +1,4 @@
-package com.example.liberty.ui.dashboard.home.category.categorydetailsactivity
+package com.example.liberty.ui.dashboard.home.courses.coursesdetailsactivity
 
 import com.example.liberty.data.network.response.coursesdetailsresponse.CoursesDetailsResponse
 

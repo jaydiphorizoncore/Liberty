@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.dashboard.home.HomeFragment">
 
         <ScrollView
@@ -18,13 +19,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <ProgressBar
                     android:id="@+id/home_progress"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/viewPager"
                     app:layout_constraintLeft_toLeftOf="@id/viewPager"
                     app:layout_constraintRight_toRightOf="@id/viewPager"
@@ -156,45 +158,50 @@
                         app:layout_constraintStart_toEndOf="@id/btn_newest"
                         app:layout_constraintTop_toBottomOf="@id/btn_popular" />
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_courses"
+                    <LinearLayout
+                        android:id="@+id/linear_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@id/btn_newest"
-                        tools:listitem="@layout/item_courses" />
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/btn_newest">
 
-                    <TextView
-                        android:id="@+id/tv_dataNotFound"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/data_not_found"
-                        android:textSize="20sp"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="@+id/recycler_courses"
-                        app:layout_constraintTop_toTopOf="@id/recycler_courses" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_courses"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_courses" />
+
+                        <TextView
+                            android:id="@+id/tv_dataNotFound"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="@string/data_not_found"
+                            android:textSize="20sp"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
                         android:drawableEnd="@drawable/ic_arrow_forward"
                         android:text="@string/str_category"
                         android:textSize="25sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/recycler_courses" />
+                        app:layout_constraintTop_toBottomOf="@id/linear_ll" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/tv_category"
