@@ -11,13 +11,9 @@ import com.example.liberty.data.network.response.dashboardresponse.Test
 import com.example.liberty.databinding.ItemCategoryBinding
 import com.example.liberty.databinding.ItemDailyQuizBinding
 
-class DailyQuizAdapter(private var context: Context, private var listData: ArrayList<Test>) :
+class DailyQuizAdapter(private var context: Context, private var listData: List<Test>) :
     RecyclerView.Adapter<DailyQuizAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemDailyQuizBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        var tv_dailyQuizName: TextView = itemView.findViewById(R.id.tv_dailyQuizName)
-        var tv_questions: TextView = itemView.findViewById(R.id.tv_questions)
-        var tv_time: TextView = itemView.findViewById(R.id.tv_time)
 
     }
 
@@ -40,8 +36,4 @@ class DailyQuizAdapter(private var context: Context, private var listData: Array
         holder.binding.tvTime.text = listData.duration
     }
 
-    fun setData(itemList: List<Test>) {
-        this.listData = itemList as ArrayList<Test>
-        notifyDataSetChanged()
-    }
 }

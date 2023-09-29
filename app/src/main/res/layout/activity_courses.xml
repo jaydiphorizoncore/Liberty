@@ -12,6 +12,24 @@
         android:layout_height="wrap_content"
         tools:context=".ui.dashboard.home.courses.coursesdetailsactivity.CoursesActivity">
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvIsCoursesDataNotFound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/data_not_found"
+                android:textSize="30sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/coursesDetailsRecyclerView"
             android:layout_width="match_parent"
@@ -31,5 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

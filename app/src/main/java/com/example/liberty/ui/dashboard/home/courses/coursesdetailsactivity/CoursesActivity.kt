@@ -27,7 +27,6 @@ class CoursesActivity : AppCompatActivity(), CoursesDetailsInterface {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_courses)
 
-
         val api = ApiInterface()
         val repository = ApiRepository(api)
         val factory = CoursesDetailsViewModelFectory(repository)
@@ -37,17 +36,22 @@ class CoursesActivity : AppCompatActivity(), CoursesDetailsInterface {
 
     }
 
-
     override fun onStarted() {
-        Log.d("TAG", "onStartedCourses")
+        Log.d("onStarted", "onStartedCourses")
         binding.progressCoursesDetailsActivity.visibility = View.VISIBLE
     }
 
     override fun onSuccess(response: CoursesDetailsResponse) {
         binding.progressCoursesDetailsActivity.visibility = View.GONE
-        Log.d("TAG", "Success")
-        coursesDetailsAdapter = CoursesDetailsAdapter(this, response.data.tagwiseData)
-        binding.coursesDetailsRecyclerView.adapter = coursesDetailsAdapter
+        Log.d("onSuccess", "$response")
+
+        if (response.data.tagwiseData.isNullOrEmpty()) {
+            binding.coursesDetailsRecyclerView.visibility = View.GONE
+            binding.tvIsCoursesDataNotFound.visibility = View.VISIBLE
+        } else {
+            coursesDetailsAdapter = CoursesDetailsAdapter(this, response.data.tagwiseData)
+            binding.coursesDetailsRecyclerView.adapter = coursesDetailsAdapter
+        }
     }
 
     override fun onFailure(message: String) {

@@ -9,5 +9,5 @@ data class Data(
     @SerializedName("is_upgrade")
     val isUpgrade: Int,
     @SerializedName("tagwise_data")
-    val tagwiseData: List<TagwiseData>
+    val tagwiseData: List<TagwiseData>?
 )

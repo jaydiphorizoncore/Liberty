@@ -12,7 +12,7 @@ import com.example.liberty.R
 import com.example.liberty.data.network.response.dashboardresponse.TopersData
 import com.example.liberty.databinding.ItemToppersBinding
 
-class ToppersAdapter(private val context: Context, private var listData: ArrayList<TopersData>) :
+class ToppersAdapter(private val context: Context, private var listData: List<TopersData>) :
     RecyclerView.Adapter<ToppersAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemToppersBinding) : RecyclerView.ViewHolder(binding.root) {
 

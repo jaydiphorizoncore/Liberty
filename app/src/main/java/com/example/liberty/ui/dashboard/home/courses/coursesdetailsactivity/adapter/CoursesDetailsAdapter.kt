@@ -38,9 +38,4 @@ class CoursesDetailsAdapter(
         holder.binding.tvMaterialsCoursesDetails.text = itemData.labelTotalMaterials
 
     }
-
-   /* fun setData(itemList: List<TagwiseData>) {
-        this.listData = itemList as ArrayList<TagwiseData>
-        notifyDataSetChanged()
-    }*/
 }

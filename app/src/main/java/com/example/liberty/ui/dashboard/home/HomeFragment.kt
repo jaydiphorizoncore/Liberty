@@ -40,13 +40,15 @@ class HomeFragment : Fragment(), DashboardInterface {
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    private lateinit var imageList: List<BannerData>
-
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var testimonialAdapter: TestimonialAdapter
     private lateinit var toppersAdapter: ToppersAdapter
     private lateinit var quizAdapter: DailyQuizAdapter
     private lateinit var coursesAdapter: CoursesAdapter
+
+    companion object {
+        var i = ""
+    }
 
     private lateinit var viewModel: ApiViewModel
 
@@ -67,12 +69,6 @@ class HomeFragment : Fragment(), DashboardInterface {
         viewModel.getDashboard()
 
         preparePackageRecyclerView()
-        prepareCoursesRecyclerView()
-        prepareCategoryRecyclerView()
-        prepareTestimonialRecyclerView()
-        prepareToppersRecyclerView()
-        prepareDailyQuizRecyclerView()
-
         return binding.root
     }
 
@@ -83,7 +79,6 @@ class HomeFragment : Fragment(), DashboardInterface {
             val i = Intent(requireContext(), PackageActivity::class.java)
             requireContext().startActivity(i)
         }
-
 
         binding.tvCategory.setOnClickListener {
             val i = Intent(requireContext(), CategoryActivity::class.java)
@@ -165,37 +160,6 @@ class HomeFragment : Fragment(), DashboardInterface {
         binding.recyclerPackages.adapter = packageRecyclerAdapter
     }
 
-    private fun prepareCoursesRecyclerView() {
-        coursesAdapter = CoursesAdapter(requireContext(), ArrayList())
-        binding.recyclerCourses.adapter = coursesAdapter
-    }
-
-    private fun prepareCategoryRecyclerView() {
-
-        categoryAdapter = CategoryAdapter(requireContext(), ArrayList())
-        binding.recyclerCategory.adapter = categoryAdapter
-
-    }
-
-    private fun prepareTestimonialRecyclerView() {
-        testimonialAdapter = TestimonialAdapter(requireContext(), ArrayList())
-
-        binding.recyclerTestimonial.adapter = testimonialAdapter
-
-    }
-
-    private fun prepareToppersRecyclerView() {
-
-        toppersAdapter = ToppersAdapter(requireContext(), ArrayList())
-        binding.recyclerTopper.adapter = toppersAdapter
-
-    }
-
-    private fun prepareDailyQuizRecyclerView() {
-        quizAdapter = DailyQuizAdapter(requireContext(), ArrayList())
-        binding.recyclerDailyQuiz.adapter = quizAdapter
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -228,60 +192,111 @@ class HomeFragment : Fragment(), DashboardInterface {
         binding.homeProgress.visibility = View.GONE
         binding.btnAllCourse.isSelected = true
         if (dashboardResponse != null) {
-            Log.d("TAG", "onSuccess")
+            viewPagerAdapter =
+                ViewPagerAdapter(requireContext(), imageList = dashboardResponse.data.bannerData)
+            binding.viewPager.adapter =
+                viewPagerAdapter //  categoryAdapter.setData(dashboardResponse.data.categories)
 
-            imageList = ArrayList()
+            categoryAdapter = CategoryAdapter(requireContext(), dashboardResponse.data.categories)
+            binding.recyclerCategory.adapter = categoryAdapter
 
-            imageList = dashboardResponse.data.bannerData
+            testimonialAdapter = TestimonialAdapter(
+                requireContext(),
+                dashboardResponse.data.testimonials.testimonialsData
+            )
+            binding.recyclerTestimonial.adapter = testimonialAdapter
 
-            viewPagerAdapter = ViewPagerAdapter(requireContext(), imageList)
-            binding.viewPager.adapter = viewPagerAdapter
+            toppersAdapter =
+                ToppersAdapter(requireContext(), dashboardResponse.data.toppers.topersData)
+            binding.recyclerTopper.adapter = toppersAdapter
+            quizAdapter = DailyQuizAdapter(requireContext(), dashboardResponse.data.tests)
+            binding.recyclerDailyQuiz.adapter = quizAdapter
 
-            categoryAdapter.setData(dashboardResponse.data.categories)
-            testimonialAdapter.setData(dashboardResponse.data.testimonials.testimonialsData)
-            toppersAdapter.setData(dashboardResponse.data.toppers.topersData)
-            quizAdapter.setData(dashboardResponse.data.tests)
-
-            coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
+            coursesAdapter =
+                CoursesAdapter(requireContext(), dashboardResponse.data.courses.allCourses.courses)
+            binding.recyclerCourses.adapter = coursesAdapter
 
             binding.btnAllCourse.setOnClickListener {
+                i = ""
                 binding.btnAllCourse.setBackgroundResource(R.drawable.button_style)
                 binding.btnAllCourse.isSelected = true
                 binding.btnPopular.isSelected = false
                 binding.btnAdvance.isSelected = false
                 binding.btnNewest.isSelected = false
-                coursesAdapter.setAllData(dashboardResponse.data.courses.allCourses.courses)
-                binding.recyclerCourses.visibility = View.VISIBLE
-                binding.tvDataNotFound.visibility = View.INVISIBLE
+
+                if (dashboardResponse.data.courses.allCourses.courses.isNullOrEmpty()) {
+                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.VISIBLE
+                } else {
+                    binding.recyclerCourses.visibility = View.VISIBLE
+                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    coursesAdapter = CoursesAdapter(
+                        requireContext(),
+                        dashboardResponse.data.courses.allCourses.courses
+                    )
+                }
+                binding.recyclerCourses.adapter = coursesAdapter
             }
             binding.btnPopular.setOnClickListener {
+                i = "1"
                 binding.btnPopular.setBackgroundResource(R.drawable.button_style)
                 binding.btnAllCourse.isSelected = false
                 binding.btnPopular.isSelected = true
                 binding.btnAdvance.isSelected = false
                 binding.btnNewest.isSelected = false
-                coursesAdapter.setAllData(dashboardResponse.data.courses.popularCourses.courses)
-                binding.recyclerCourses.visibility = View.VISIBLE
-                binding.tvDataNotFound.visibility = View.INVISIBLE
+
+                if (dashboardResponse.data.courses.popularCourses.courses.isNullOrEmpty()) {
+                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.VISIBLE
+                } else {
+                    binding.recyclerCourses.visibility = View.VISIBLE
+                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    coursesAdapter = CoursesAdapter(
+                        requireContext(),
+                        dashboardResponse.data.courses.popularCourses.courses
+                    )
+                }
+                binding.recyclerCourses.adapter = coursesAdapter
             }
             binding.btnAdvance.setOnClickListener {
+                i = "2"
                 binding.btnPopular.setBackgroundResource(R.drawable.button_style)
                 binding.btnAllCourse.isSelected = false
                 binding.btnPopular.isSelected = false
                 binding.btnAdvance.isSelected = true
                 binding.btnNewest.isSelected = false
-                coursesAdapter.setAllData(dashboardResponse.data.courses.advanceCourses.courses)
-                binding.recyclerCourses.visibility = View.VISIBLE
-                binding.tvDataNotFound.visibility = View.INVISIBLE
+
+                if (dashboardResponse.data.courses.advanceCourses.courses.isNullOrEmpty()) {
+                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.VISIBLE
+                } else {
+                    binding.recyclerCourses.visibility = View.VISIBLE
+                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    coursesAdapter = CoursesAdapter(
+                        requireContext(),
+                        dashboardResponse.data.courses.advanceCourses.courses
+                    )
+                }
+                binding.recyclerCourses.adapter = coursesAdapter
             }
             binding.btnNewest.setOnClickListener {
+                i = "3"
                 binding.btnPopular.setBackgroundResource(R.drawable.button_style)
                 binding.btnAllCourse.isSelected = false
                 binding.btnPopular.isSelected = false
                 binding.btnAdvance.isSelected = false
                 binding.btnNewest.isSelected = true
-                binding.recyclerCourses.visibility = View.INVISIBLE
-                binding.tvDataNotFound.visibility = View.VISIBLE
+                if (dashboardResponse.data.courses.newestCourses.courses.isNullOrEmpty()) {
+                    binding.recyclerCourses.visibility = View.INVISIBLE
+                    binding.tvDataNotFound.visibility = View.VISIBLE
+                } else {
+                    binding.recyclerCourses.visibility = View.VISIBLE
+                    binding.tvDataNotFound.visibility = View.INVISIBLE
+                    coursesAdapter = CoursesAdapter(
+                        requireContext(),
+                        dashboardResponse.data.courses.newestCourses.courses
+                    )
+                }
             }
         }
         binding.tvCourses.setOnClickListener {

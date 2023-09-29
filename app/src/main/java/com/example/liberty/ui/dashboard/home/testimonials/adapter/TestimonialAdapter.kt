@@ -14,7 +14,7 @@ import com.example.liberty.databinding.ItemTestimonialBinding
 
 class TestimonialAdapter(
     private val context: Context,
-    private var listData: ArrayList<TestimonialsData>
+    private var listData: List<TestimonialsData>
 ) :
     RecyclerView.Adapter<TestimonialAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemTestimonialBinding) : RecyclerView.ViewHolder(binding.root) {

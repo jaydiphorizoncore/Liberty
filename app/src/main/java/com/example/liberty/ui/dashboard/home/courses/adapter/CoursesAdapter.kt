@@ -9,7 +9,7 @@ import com.example.liberty.R
 import com.example.liberty.data.network.response.dashboardresponse.Course
 import com.example.liberty.databinding.ItemCoursesBinding
 
-class CoursesAdapter(private var context: Context, private var listData: ArrayList<Course>) :
+class CoursesAdapter(private var context: Context, private var listData: List<Course>) :
     RecyclerView.Adapter<CoursesAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemCoursesBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -40,11 +40,6 @@ class CoursesAdapter(private var context: Context, private var listData: ArrayLi
         holder.binding.tvMaterialsCourses.text = listDAta.labelTotalMaterials
         //   holder.tv_tests_courses.text =
         //  holder.item_courses_ll.setBackgroundColor(listData[position].item_courses_ll)
-    }
-
-    fun setAllData(itemList: List<Course>) {
-        this.listData = itemList as ArrayList<Course>
-        notifyDataSetChanged()
     }
 
 }
